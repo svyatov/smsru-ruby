@@ -1,11 +1,11 @@
-# smsru_ruby
+# smsru-ruby
 
-[![Gem Version](https://badge.fury.io/rb/smsru_ruby.svg)](https://rubygems.org/gems/smsru_ruby)
-[![CI](https://github.com/svyatov/smsru_ruby/actions/workflows/main.yml/badge.svg)](https://github.com/svyatov/smsru_ruby/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/svyatov/smsru_ruby/branch/main/graph/badge.svg)](https://codecov.io/gh/svyatov/smsru_ruby)
-[![Documentation](https://img.shields.io/badge/docs-rubydoc.info-blue.svg)](https://rubydoc.info/gems/smsru_ruby)
+[![Gem Version](https://badge.fury.io/rb/smsru-ruby.svg)](https://rubygems.org/gems/smsru-ruby)
+[![CI](https://github.com/svyatov/smsru-ruby/actions/workflows/main.yml/badge.svg)](https://github.com/svyatov/smsru-ruby/actions/workflows/main.yml)
+[![codecov](https://codecov.io/gh/svyatov/smsru-ruby/branch/main/graph/badge.svg)](https://codecov.io/gh/svyatov/smsru-ruby)
+[![Documentation](https://img.shields.io/badge/docs-rubydoc.info-blue.svg)](https://rubydoc.info/gems/smsru-ruby)
 [![Ruby](https://img.shields.io/badge/ruby-%3E%3D%203.2-CC342D.svg)](https://www.ruby-lang.org)
-[![Types: RBS](https://img.shields.io/badge/types-RBS-8A2BE2.svg)](https://github.com/svyatov/smsru_ruby/tree/main/sig)
+[![Types: RBS](https://img.shields.io/badge/types-RBS-8A2BE2.svg)](https://github.com/svyatov/smsru-ruby/tree/main/sig)
 
 A modern, **dependency-free**, **fully typed** Ruby client for the [SMS.ru](https://sms.ru) HTTP API —
 typed results, typed errors, shipped RBS signatures, and first-class webhooks.
@@ -16,7 +16,7 @@ users by phone call, inspect your balance/limits/senders, manage the stoplist, a
 register delivery callbacks — all returning typed, immutable result objects and
 raising typed errors.
 
-## Why smsru_ruby?
+## Why smsru-ruby?
 
 - **Zero runtime dependencies** — only Ruby's standard library (`net/http`, `json`, `openssl`).
 - **Fully typed** — immutable `Data` result objects, not raw hashes, plus a typed error hierarchy: `rescue SmsRu::Error` catches everything.
@@ -45,7 +45,7 @@ The full SMS.ru API, mapped to an idiomatic Ruby surface:
 
 ## Table of contents
 
-- [Why smsru_ruby?](#why-smsru_ruby)
+- [Why smsru-ruby?](#why-smsru-ruby)
 - [What's covered](#whats-covered)
 - [Supported Ruby versions](#supported-ruby-versions)
 - [Installation](#installation)
@@ -71,17 +71,17 @@ CI runs against `ruby-head`, `4.0`, `3.4`, `3.3`, and `3.2`.
 
 ```ruby
 # Gemfile
-gem "smsru_ruby"
+gem "smsru-ruby"
 ```
 
 ```sh
 bundle install
 # or
-gem install smsru_ruby
+gem install smsru-ruby
 ```
 
 ```ruby
-require "smsru_ruby"
+require "smsru-ruby"
 ```
 
 ## Quick start

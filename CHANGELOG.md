@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-07-13
+
+### Changed
+
+- **BREAKING:** Renamed the gem from `smsru_ruby` to `smsru-ruby` for
+  consistency with the `-ruby` suffix convention. Update your `Gemfile`
+  (`gem "smsru-ruby"`) and requires (`require "smsru-ruby"`). The Ruby API is
+  unchanged — the top-level class is still `SmsRu`.
+
 ## [1.0.0] - 2026-06-26
 
 First public release. A Ruby port of the official SMS.ru PHP library covering the
@@ -38,5 +47,6 @@ same API, reworked to be idiomatic Ruby. How it differs from the original:
   SMS.ru's loosely-typed JSON is normalized to the declared types at the parse
   boundary, so result objects never surface raw wire values.
 
-[Unreleased]: https://github.com/svyatov/smsru_ruby/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/svyatov/smsru_ruby/releases/tag/v1.0.0
+[Unreleased]: https://github.com/svyatov/smsru-ruby/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/svyatov/smsru-ruby/compare/v1.0.0...v2.0.0
+[1.0.0]: https://github.com/svyatov/smsru-ruby/releases/tag/v1.0.0

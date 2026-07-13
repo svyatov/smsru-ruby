@@ -9,6 +9,12 @@ AllCops:
 Style/Documentation:
   Enabled: false
 
+# The gem's require entry point is intentionally dash-named (`smsru-ruby.rb`) to
+# match the package name; the `-ruby` suffix convention overrides snake_case here.
+Naming/FileName:
+  Exclude:
+    - "lib/smsru-ruby.rb"
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 

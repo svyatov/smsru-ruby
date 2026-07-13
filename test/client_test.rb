@@ -21,7 +21,7 @@ class ClientTest < Minitest::Test
 
   def test_deliver_to_one_number
     with_cassette("deliver_single") do
-      result = @client.deliver(TEST_PHONE, "Hello from smsru_ruby")
+      result = @client.deliver(TEST_PHONE, "Hello from smsru-ruby")
 
       assert_equal 1, result.messages.size
       assert_equal TEST_PHONE, result.messages.first.phone
