@@ -8,14 +8,14 @@ class SmsRu
   #
   # The `data` param arrives as a Hash in bare Rack and an Array in PHP-style
   # clients. In Rails it is an `ActionController::Parameters`, which is **not** a
-  # Hash — convert it with `.to_unsafe_h` first, or the numeric-key ordering the
+  # Hash. Convert it with `.to_unsafe_h` first, or the numeric-key ordering the
   # signature depends on is skipped and {valid?} rejects the payload. The
   # payload is signature-verified, so `to_unsafe_h` is safe here (`.to_h` would
   # drop unpermitted keys).
   #
-  # {parse} returns one typed event per record — a {SmsRu::Events::SmsStatus},
+  # {parse} returns one typed event per record: a {SmsRu::Events::SmsStatus},
   # {SmsRu::Events::CallcheckStatus}, {SmsRu::Events::Test}, or
-  # {SmsRu::Events::Unknown} — best handled with a case match:
+  # {SmsRu::Events::Unknown}. A case match handles them best:
   #
   #   data = params[:data].to_unsafe_h # Rails; pass params["data"] as-is in bare Rack
   #   return head(:forbidden) unless SmsRu::Webhook.valid?(data, params[:hash], api_id)

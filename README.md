@@ -297,6 +297,8 @@ SmsRu::Error                  # base class
    └─ SmsRu::InsufficientFundsError # not enough money (code 201)
 ```
 
+Rescue whichever level of that hierarchy your code needs, around any call.
+
 ```ruby
 begin
   client.deliver("79991234567", "Hi")

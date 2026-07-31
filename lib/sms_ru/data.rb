@@ -155,7 +155,7 @@ class SmsRu
   end
 
   # Result of SmsRu#call (flash call). `code` is the last 4 digits of the number
-  # that calls the user — what they read off the incoming call and enter.
+  # that calls the user, which is what they read off the incoming call and enter.
   #
   # @!attribute [r] code
   #   @return [String] the 4-digit code (the calling number's last 4 digits)
@@ -212,7 +212,7 @@ class SmsRu
     def available_today = total_free - used_today
   end
 
-  # Result of SmsRu::CallCheck#add — the number the user must call to authorize.
+  # Result of SmsRu::CallCheck#add: the number the user must call to authorize.
   #
   # @!attribute [r] check_id
   #   @return [String] the check id to poll with SmsRu::CallCheck#status
@@ -235,7 +235,7 @@ class SmsRu
     end
   end
 
-  # Result of SmsRu::CallCheck#status — whether the authorizing call has arrived.
+  # Result of SmsRu::CallCheck#status: whether the authorizing call has arrived.
   #
   # @!attribute [r] status_code
   #   @return [Integer] the check status code (401 once confirmed)
