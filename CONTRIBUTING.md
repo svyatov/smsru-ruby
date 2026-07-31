@@ -3,6 +3,13 @@
 Thanks for your interest in improving `smsru-ruby`! Please be respectful and
 follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
+## Maintenance
+
+Leonid Svyatov ([@svyatov](https://github.com/svyatov)) reviews and merges every
+pull request and publishes every release. No succession is arranged. If he stops
+maintaining the gem, nobody else holds commit or publishing rights. The project
+then stalls until he hands those rights over or someone forks it.
+
 ## Development setup
 
 ```sh
@@ -32,7 +39,7 @@ COVERAGE=true bundle exec rake   # expect 100% coverage
 - Ruby 3.2+, two-space indentation, 120-character lines.
 - RuboCop (with `rubocop-minitest`) must pass; run `bundle exec rubocop -A` to
   auto-correct.
-- No new runtime dependencies — the gem is intentionally standard-library only.
+- Add no runtime dependencies. The gem uses the standard library only.
 
 ## Commit messages
 

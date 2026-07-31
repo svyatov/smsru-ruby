@@ -4,16 +4,21 @@
 
 | Version | Supported |
 | ------- | --------- |
-| 1.x     | ✅        |
+| 2.x     | Yes       |
+| 1.x     | No        |
+
+Version 1.x ended support when 2.0.0 shipped. The upgrade is a Gemfile and
+require change; the Ruby API did not change. See the
+[CHANGELOG](https://github.com/svyatov/smsru-ruby/blob/main/CHANGELOG.md).
 
 ## Reporting a vulnerability
 
-Please **do not** open a public issue for security vulnerabilities.
+Report a security vulnerability privately. Keep it out of the public issue
+tracker.
 
-Instead, report them privately via
-[GitHub Security Advisories](https://github.com/svyatov/smsru-ruby/security/advisories/new),
-or by email to **leonid@svyatov.com**.
+Use [GitHub Security Advisories](https://github.com/svyatov/smsru-ruby/security/advisories/new),
+or email **leonid@svyatov.com**.
 
 You can expect an acknowledgement within 48 hours and an initial assessment
-within one week. We follow a coordinated-disclosure process and will credit
-reporters who wish to be acknowledged.
+within one week. This project follows coordinated disclosure and credits
+reporters who want acknowledgement.
