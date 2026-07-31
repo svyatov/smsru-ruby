@@ -3,13 +3,9 @@
 if ENV["COVERAGE"]
   require "simplecov"
 
-  if ENV["CI"]
-    require "simplecov_json_formatter"
-    SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
-  end
+  SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter if ENV["CI"]
 
   SimpleCov.start do
-    add_filter "/test/"
     minimum_coverage 100
   end
 end
