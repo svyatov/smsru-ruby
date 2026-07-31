@@ -20,5 +20,5 @@ gem "steep", "~> 2.0", require: false
 
 gem "yard", "~> 0.9", require: false
 
-gem "simplecov", "~> 0.22", require: false
+gem "simplecov", "~> 1.0", require: false
 gem "simplecov_json_formatter", "~> 0.1", require: false
