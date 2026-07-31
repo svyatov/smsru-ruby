@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Leonid Svyatov"]
   spec.email = ["leonid@svyatov.com"]
 
-  spec.summary = "Modern, dependency-free Ruby client for the SMS.ru API."
-  spec.description = "A modern, dependency-free Ruby client for the SMS.ru HTTP API. Send single or bulk SMS, " \
+  spec.summary = "Ruby client for the SMS.ru HTTP API: send SMS, check delivery, verify users by phone call."
+  spec.description = "A Ruby client for the SMS.ru HTTP API. Send single or bulk SMS, " \
                      "schedule delivery, check cost and delivery status, verify users by phone call, inspect " \
                      "balance/limits/senders, manage the stoplist, and register delivery callbacks."
   spec.homepage = "https://github.com/svyatov/smsru-ruby"
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ["lib"]
   spec.files = Dir["lib/**/*.rb"] + Dir["sig/**/*"] +
-               %w[.yardopts CHANGELOG.md LICENSE.txt README.md smsru-ruby.gemspec]
+               %w[.yardopts CHANGELOG.md LICENSE README.md smsru-ruby.gemspec]
 
   spec.metadata["rubygems_mfa_required"] = "true"
   spec.metadata["documentation_uri"] = "https://rubydoc.info/gems/smsru-ruby"

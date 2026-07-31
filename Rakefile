@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "bundler/gem_tasks"
 require "rake/testtask"
 require "rubocop/rake_task"
 require "steep/rake_task"
@@ -66,13 +65,9 @@ namespace :vcr do
   end
 end
 
-# `rake release` (from bundler/gem_tasks) pushes the gem to RubyGems, which
-# requires an MFA OTP. Feed it a fresh code from 1Password via GEM_HOST_OTP_CODE,
-# which `gem push` reads. Needs `op` signed in (interactive/desktop session).
-Rake::Task["release:rubygem_push"].enhance(["fetch_otp"])
-
-task :fetch_otp do
-  ENV["GEM_HOST_OTP_CODE"] = `op item get "RubyGems" --account my --otp`.strip
-end
+# There is deliberately no `release` task. Releases run from
+# .github/workflows/release.yml on a signed `v*` tag, which builds the gem,
+# signs it with Sigstore, and pushes it with an attestation over OIDC. A local
+# `gem push` would publish without provenance, so the local path is not offered.
 
 task default: %i[rubocop rbs test]

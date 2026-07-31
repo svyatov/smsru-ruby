@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **BREAKING:** Renamed the gem from `smsru_ruby` to `smsru-ruby` for
   consistency with the `-ruby` suffix convention. Update your `Gemfile`
   (`gem "smsru-ruby"`) and requires (`require "smsru-ruby"`). The Ruby API is
-  unchanged — the top-level class is still `SmsRu`.
+  unchanged. The top-level class is still `SmsRu`.
 
 ## [1.0.0] - 2026-06-26
 
@@ -34,8 +34,8 @@ same API, reworked to be idiomatic Ruby. How it differs from the original:
   and `Cost`; plus `#confirmed?` and `#available_today`. No raw decoded JSON or
   magic numbers.
 - **Typed error hierarchy** under `SmsRu::Error` (`AuthError`,
-  `InsufficientFundsError`, `ResponseError`, `ConnectionError`) — errors are
-  raised, not returned as status codes you have to inspect.
+  `InsufficientFundsError`, `ResponseError`, `ConnectionError`). Errors are
+  raised rather than returned as status codes you have to inspect.
 - **First-class inbound webhooks**: `SmsRu::Webhook.parse` decodes the callback
   POST into typed events (`SmsRu::Events::SmsStatus`, `CallcheckStatus`, `Test`,
   `Unknown`), and `SmsRu::Webhook.valid?` verifies the signature.

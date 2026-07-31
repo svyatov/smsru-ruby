@@ -1,103 +1,70 @@
 # smsru-ruby
 
-[![Gem Version](https://badge.fury.io/rb/smsru-ruby.svg)](https://rubygems.org/gems/smsru-ruby)
-[![CI](https://github.com/svyatov/smsru-ruby/actions/workflows/main.yml/badge.svg)](https://github.com/svyatov/smsru-ruby/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/svyatov/smsru-ruby/branch/main/graph/badge.svg)](https://codecov.io/gh/svyatov/smsru-ruby)
-[![Documentation](https://img.shields.io/badge/docs-rubydoc.info-blue.svg)](https://rubydoc.info/gems/smsru-ruby)
-[![Ruby](https://img.shields.io/badge/ruby-%3E%3D%203.2-CC342D.svg)](https://www.ruby-lang.org)
-[![Types: RBS](https://img.shields.io/badge/types-RBS-8A2BE2.svg)](https://github.com/svyatov/smsru-ruby/tree/main/sig)
+smsru-ruby is a Ruby client for the [SMS.ru](https://sms.ru) HTTP API, for applications that send SMS,
+check delivery, and verify users by phone call.
 
-A modern, **dependency-free**, **fully typed** Ruby client for the [SMS.ru](https://sms.ru) HTTP API —
-typed results, typed errors, shipped RBS signatures, and first-class webhooks.
+[![Gem version](https://img.shields.io/gem/v/smsru-ruby)](https://rubygems.org/gems/smsru-ruby)
+[![CI](https://github.com/svyatov/smsru-ruby/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/svyatov/smsru-ruby/actions/workflows/main.yml)
+[![Coverage](https://codecov.io/gh/svyatov/smsru-ruby/branch/main/graph/badge.svg)](https://app.codecov.io/gh/svyatov/smsru-ruby)
 
-It is a clean, idiomatic Ruby port of the official [SMS.ru PHP library](https://sms.ru/php):
-send single or bulk SMS, schedule delivery, check cost and delivery status, verify
-users by phone call, inspect your balance/limits/senders, manage the stoplist, and
-register delivery callbacks — all returning typed, immutable result objects and
-raising typed errors.
+- **Covers the whole SMS.ru HTTP API.** Sending, cost, delivery status, flash call and callcheck
+  verification, balance and limits, stoplist, callback registration, and inbound webhook parsing.
+- **11 typed result objects and 12 named status constants.** Every response arrives as a frozen `Data`
+  object rather than a decoded Hash.
+- **No runtime dependencies.** The gem loads `net/http`, `json`, and `openssl` from the standard
+  library and nothing else.
+- **A Ruby port of the official [SMS.ru PHP library](https://sms.ru/php).** Same API coverage, with
+  keyword arguments, namespaced sub-resources, and raised errors in place of flat `get_*` methods and
+  returned status codes.
+- **100% line coverage and 100% documented public API.** Both gates run in CI on every push.
 
-## Why smsru-ruby?
+## Installation
 
-- **Zero runtime dependencies** — only Ruby's standard library (`net/http`, `json`, `openssl`).
-- **Fully typed** — immutable `Data` result objects, not raw hashes, plus a typed error hierarchy: `rescue SmsRu::Error` catches everything.
-- **RBS signatures shipped** (`sig/`) and Steep-checked — type-check your integration out of the box.
-- **First-class webhooks** — parse signed delivery and call-authorization callbacks into typed events; the signature is verified in **constant time** (timing-attack safe).
-- **Secret-safe by default** — TLS verified; the optional logger never logs your `api_id`, phone numbers, or message text. Configurable timeout and transport retries.
-- **Outcome vs. delivery state** — two distinct ideas, each with its own predicates (`ok?` vs. `delivered?`/`pending?`/`failed?`), never conflated.
-- **100% test & documentation coverage, enforced in CI** across Ruby 3.2–4.0.
+Add the gem to your Gemfile.
 
-## What's covered
+```ruby
+gem "smsru-ruby"
+```
+
+Then run `bundle install`. Without Bundler, run `gem install smsru-ruby`.
+
+## Quick start
+
+Create a client with your API id, then send a message.
+
+```ruby
+require "smsru-ruby"
+
+client = SmsRu.new("YOUR_API_ID")
+result = client.deliver("79991234567", "Hello from Ruby!")
+
+result.messages.first.sms_id  # => "000000-10000000"
+client.my.balance             # => 4762.58
+```
+
+Get your `api_id` in the SMS.ru dashboard under
+[Settings, API](https://sms.ru/?panel=api).
+
+## API coverage
 
 The full SMS.ru API, mapped to an idiomatic Ruby surface:
 
 | Capability | Method |
 | --- | --- |
-| Send — single, bulk, or per-number text | `client.deliver` |
+| Send a single, bulk, or per-number text | `client.deliver` |
 | Price a message before sending | `client.cost` |
 | Delivery status, with state predicates | `client.status` |
 | Verify by flash call (outbound) | `client.call` |
 | Verify by callcheck (inbound) | `client.callcheck` |
 | Balance, limits, free limit, senders | `client.my` |
 | Validate credentials | `client.auth.ok?` |
-| Stoplist — add, remove, list | `client.stoplist` |
-| Webhook URLs — add, remove, list | `client.callbacks` |
-| Parse & verify incoming webhooks | `SmsRu::Webhook` |
-
-## Table of contents
-
-- [Why smsru-ruby?](#why-smsru-ruby)
-- [What's covered](#whats-covered)
-- [Supported Ruby versions](#supported-ruby-versions)
-- [Installation](#installation)
-- [Quick start](#quick-start)
-- [Configuration](#configuration)
-- [Sending messages](#sending-messages)
-- [Cost and status](#cost-and-status)
-- [Verify by phone call](#verify-by-phone-call)
-- [Account information](#account-information)
-- [Stoplist](#stoplist)
-- [Callbacks (webhooks)](#callbacks-webhooks)
-- [Error handling](#error-handling)
-- [Development](#development)
-- [Recording test cassettes](#recording-test-cassettes)
-- [License](#license)
-
-## Supported Ruby versions
-
-Ruby **3.2+** (the result objects use [`Data`](https://docs.ruby-lang.org/en/3.2/Data.html)).
-CI runs against `ruby-head`, `4.0`, `3.4`, `3.3`, and `3.2`.
-
-## Installation
-
-```ruby
-# Gemfile
-gem "smsru-ruby"
-```
-
-```sh
-bundle install
-# or
-gem install smsru-ruby
-```
-
-```ruby
-require "smsru-ruby"
-```
-
-## Quick start
-
-```ruby
-client = SmsRu.new("YOUR_API_ID")
-
-result = client.deliver("79991234567", "Hello from Ruby!")
-result.messages.first.sms_id   # => "000000-10000000"
-client.my.balance              # => 4762.58
-```
-
-Get your `api_id` in the SMS.ru dashboard under
-[Settings → API](https://sms.ru/?panel=api).
+| Stoplist: add, remove, list | `client.stoplist` |
+| Webhook URLs: add, remove, list | `client.callbacks` |
+| Parse and verify incoming webhooks | `SmsRu::Webhook` |
 
 ## Configuration
+
+Every client option is a keyword argument on `SmsRu.new`:
 
 ```ruby
 SmsRu.new(
@@ -111,11 +78,11 @@ SmsRu.new(
 ```
 
 Retries apply only to transport-level problems (timeouts, refused connections).
-API errors are never retried — they are raised immediately.
+API errors are never retried. They are raised immediately.
 
 `from` is a per-client default so you don't repeat your sender name on every call;
 a per-call `from:` always wins. The `logger` logs only the request path and
-transport failures — never your `api_id`, phone numbers, or message text.
+transport failures, never your `api_id`, phone numbers, or message text.
 
 ## Sending messages
 
@@ -128,7 +95,7 @@ client.deliver("79991234567", "Hi there")
 # 2. Same text to many numbers (Array)
 client.deliver(["79991234567", "79991234568"], "Hi everyone")
 
-# 3. A different text per number (Hash — do not pass a separate text).
+# 3. A different text per number (Hash, with no separate text argument).
 #    Use braces so Ruby treats it as a positional Hash, not keyword arguments.
 client.deliver({
   "79991234567" => "Hi Alice",
@@ -143,7 +110,7 @@ client.deliver(
   "79991234567", "Hi",
   from: "MyCompany",     # approved sender name
   time: Time.now.to_i + 3600, # scheduled send (UNIX time, up to 2 months ahead)
-  ttl: 60,               # message lifetime in minutes (1–1440)
+  ttl: 60,               # message lifetime in minutes (1 to 1440)
   daytime: true,         # defer night-time sends to the recipient's daytime
   translit: true,        # transliterate Cyrillic to Latin
   test: true,            # test mode for this call (overrides the client default)
@@ -174,6 +141,8 @@ result.failed                  # => [SmsRu::Sms, ...] rejected recipients
 
 ## Cost and status
 
+Price a message before sending, and read the delivery state afterwards:
+
 ```ruby
 # Price a message before sending (text is optional; omit it for the price of 1 SMS)
 cost = client.cost("79991234567", "How much?")
@@ -185,15 +154,15 @@ cost.ok?                       # => true only if every recipient was priced
 cost.failed                    # => [SmsRu::CostItem, ...] recipients that errored
 cost.failed.first.error_code   # => 207
 
-# Delivery status — one id or an Array of ids
+# Delivery status takes one id or an Array of ids
 status = client.status("000000-10000000")
 status.status_code  # => 103   (the delivery state code)
 status.status_text  # => "Сообщение доставлено"
 
 # State predicates instead of memorizing codes:
 status.delivered?   # => true  (code 103)
-status.pending?     # => false (codes 100–102, still in transit)
-status.failed?      # => false (codes 104–108, 150)
+status.pending?     # => false (codes 100 to 102, still in transit)
+status.failed?      # => false (codes 104 to 108, 150)
 status.found?       # => true  (false only when the id is unknown, code -1)
 
 statuses = client.status(["000000-10000000", "000000-10000001"]) # => [SmsRu::Status, ...]
@@ -204,15 +173,15 @@ Every code has a named constant under `SmsRu::Statuses` (e.g.
 predicates don't cover. The same predicates are available on
 `SmsRu::Events::SmsStatus` from webhook payloads.
 
-> **Outcome vs. delivery state — two ideas, two names.** `ok?` (with
+> **Outcome and delivery state are two ideas with two names.** `ok?` (with
 > `error_code`/`error_text` on a rejected `Sms`/`CostItem`) answers *did the
 > request succeed for this recipient*. `status_code` (with
-> `delivered?`/`pending?`/`failed?`) answers *where the message is in delivery* —
+> `delivered?`/`pending?`/`failed?`) answers *where the message is in delivery*,
 > and only `Status` and webhook events carry it.
 
 ## Verify by phone call
 
-Two ways to verify a user by phone call — no SMS required.
+Two ways to verify a user by phone call, with no SMS required.
 
 **Outbound (flash call).** SMS.ru calls the user; the last 4 digits of the
 calling number are the code. You receive the expected `code` to compare against
@@ -220,7 +189,7 @@ what the user enters:
 
 ```ruby
 call = client.call("79991234567")
-call.code     # => "1435" — the last 4 digits the user will see
+call.code     # => "1435", the last 4 digits the user will see
 call.call_id  # => "000000-10000000"
 ```
 
@@ -229,7 +198,7 @@ call (free for the caller) and marks the check confirmed:
 
 ```ruby
 check = client.callcheck.add("79991234567")
-check.call_phone_pretty  # => "+7 (800) 500-8275" — show this to the user
+check.call_phone_pretty  # => "+7 (800) 500-8275", show this to the user
 
 # Poll until the user has called (or receive it via a callback/webhook):
 client.callcheck.status(check.check_id).confirmed?  # => true
@@ -286,9 +255,9 @@ In your webhook handler, verify the signature, parse the payload, and
 acknowledge it by replying with the string `"100"`:
 
 ```ruby
-# In Rails, params[:data] is ActionController::Parameters, not a Hash — convert
-# it with .to_unsafe_h first, or the numeric-key ordering the signature depends
-# on is skipped and the check below rejects the payload. The payload is
+# In Rails, params[:data] is ActionController::Parameters rather than a Hash.
+# Convert it with .to_unsafe_h first, or the numeric-key ordering the signature
+# depends on is skipped and the check below rejects the payload. The payload is
 # signature-verified, so to_unsafe_h is safe here (.to_h would drop keys).
 # In bare Rack params["data"] is already a Hash; pass it as-is.
 data = params[:data].to_unsafe_h
@@ -342,10 +311,14 @@ rescue SmsRu::ConnectionError => e
 end
 ```
 
-Note that per-recipient failures in a bulk `deliver` are **not** raised — they are
+Note that per-recipient failures in a bulk `deliver` are **not** raised. They are
 reported on each `SmsRu::Sms` in `result.messages` (see above).
 
 ## Development
+
+Ruby 3.2 or newer is required, because the result objects use
+[`Data`](https://docs.ruby-lang.org/en/3.2/Data.html). CI runs against
+`ruby-head`, `4.0`, `3.4`, `3.3`, and `3.2`.
 
 ```sh
 bin/setup            # install dependencies
@@ -361,12 +334,12 @@ diagnostics (no implicit `untyped`, no unannotated collections) at **100% type
 coverage**, gated in CI. Loosely-typed JSON from SMS.ru (which returns, say,
 `total_limit` as the string `"10"`) is normalized into the declared types at the
 parse boundary, and `rbs:test` checks that the values flowing through the suite
-actually match `sig/` at runtime — so the types can't drift from the code.
+actually match `sig/` at runtime, so the types cannot drift from the code.
 
 ## Recording test cassettes
 
 End-to-end tests replay real SMS.ru responses recorded with [VCR](https://github.com/vcr/vcr).
-The cassettes are not committed with secrets — your `api_id` is filtered out. To
+The cassettes are not committed with secrets: your `api_id` is filtered out. To
 record them once against your own account (message sends use `test=1`, so they are
 free):
 
@@ -378,6 +351,27 @@ This writes `test/cassettes/*.yml`. Commit them, then `COVERAGE=true bundle exec
 runs fully offline at 100% coverage. Before cassettes are recorded, the end-to-end
 tests are skipped (the unit and transport tests still run).
 
-## License
+## Help and project status
 
-Released under the [MIT License](LICENSE.txt).
+Ask a question or report a defect in the
+[issue tracker](https://github.com/svyatov/smsru-ruby/issues). Both go to the same
+place. For a security vulnerability, follow
+[SECURITY.md](https://github.com/svyatov/smsru-ruby/blob/main/SECURITY.md) instead
+of opening an issue.
+
+Leonid Svyatov maintains this gem alone. He reads every issue, fixes defects in the
+SMS.ru API coverage, and keeps the gem running on supported Ruby versions. Feature
+work depends on the time he has.
+[CONTRIBUTING.md](https://github.com/svyatov/smsru-ruby/blob/main/CONTRIBUTING.md#maintenance)
+records who merges and releases.
+
+## Links
+
+- [CHANGELOG.md](https://github.com/svyatov/smsru-ruby/blob/main/CHANGELOG.md) records every released
+  change.
+- [CONTRIBUTING.md](https://github.com/svyatov/smsru-ruby/blob/main/CONTRIBUTING.md) covers setup,
+  tests, and the pull request process.
+- [SECURITY.md](https://github.com/svyatov/smsru-ruby/blob/main/SECURITY.md) explains how to report a
+  vulnerability privately.
+- [API documentation](https://rubydoc.info/gems/smsru-ruby) is generated from the source with YARD.
+- [LICENSE](https://github.com/svyatov/smsru-ruby/blob/main/LICENSE) is the MIT License.
