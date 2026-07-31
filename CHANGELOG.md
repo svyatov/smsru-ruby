@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-07-31
+
+### Added
+
+- Releases are now built and published by GitHub Actions over OIDC, and every
+  published gem carries a Sigstore provenance attestation. Verify one with
+  `https://rubygems.org/api/v1/attestations/smsru-ruby-VERSION.json`.
+
+### Changed
+
+- Renamed `LICENSE.txt` to `LICENSE`. The license text is untouched and the gem
+  is still MIT.
+- Rewrote the README and widened the gemspec summary and description to describe
+  the full API surface.
+
 ## [2.0.0] - 2026-07-13
 
 ### Changed
@@ -47,6 +62,7 @@ same API, reworked to be idiomatic Ruby. How it differs from the original:
   SMS.ru's loosely-typed JSON is normalized to the declared types at the parse
   boundary, so result objects never surface raw wire values.
 
-[Unreleased]: https://github.com/svyatov/smsru-ruby/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/svyatov/smsru-ruby/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/svyatov/smsru-ruby/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/svyatov/smsru-ruby/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/svyatov/smsru-ruby/releases/tag/v1.0.0
