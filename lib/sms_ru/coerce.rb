@@ -2,15 +2,15 @@
 
 class SmsRu
   # Normalizes loosely-typed SMS.ru JSON values into the types the result
-  # objects declare. SMS.ru is inconsistent on the wire — `/my/limit` returns
+  # objects declare. SMS.ru is inconsistent on the wire: `/my/limit` returns
   # `total_limit` as the string `"10"` but `used_today` as the number `0`, and
-  # some counters arrive as `null` — so each field is coerced here rather than
+  # some counters arrive as `null`. Each field is coerced here rather than
   # trusted as-is.
   #
   # Each type has two helpers: the `?` variant returns nil for a
   # missing/blank/unparseable value (for the nullable fields), while the plain
   # variant falls back to a default (`""`/`0`/`0.0`, overridable) for the fields
-  # the API always populates — so call sites declare their nullability by name.
+  # the API always populates, so call sites declare their nullability by name.
   #
   # @api private
   module Coerce

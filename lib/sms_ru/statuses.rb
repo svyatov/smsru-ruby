@@ -41,10 +41,10 @@ class SmsRu
     # @return [Boolean] true once the message reached the handset (code 103)
     def delivered? = status_code == Statuses::DELIVERED
 
-    # @return [Boolean] true while the message is still in transit (codes 100–102)
+    # @return [Boolean] true while the message is still in transit (codes 100 to 102)
     def pending? = !status_code.nil? && Statuses::PENDING.include?(status_code)
 
-    # @return [Boolean] true when the message will not be delivered (codes 104–108, 150)
+    # @return [Boolean] true when the message will not be delivered (codes 104 to 108, and 150)
     def failed? = !status_code.nil? && Statuses::FAILED.include?(status_code)
   end
 end

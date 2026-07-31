@@ -20,7 +20,7 @@ class SmsRu
   # @param retries [Integer] retry attempts on transport failure (0 disables; PHP default is 5)
   # @param from    [String, nil] default sender name for #deliver (overridable per call)
   # @param logger  [Logger, nil] optional logger; logs the request path and transport
-  #   failures only — never the api_id, phone numbers, or message text
+  #   failures only, never the api_id, phone numbers, or message text
   def initialize(api_id, timeout: 30, test: false, retries: 5, from: nil, logger: nil)
     @api_id = api_id
     @timeout = timeout
@@ -39,7 +39,7 @@ class SmsRu
   #   forms, must be omitted for the Hash form
   # @param from [String, nil] an approved sender name
   # @param time [Integer, nil] schedule the send at this UNIX timestamp
-  # @param ttl [Integer, nil] message lifetime in minutes (1–1440); undelivered
+  # @param ttl [Integer, nil] message lifetime in minutes (1 to 1440); undelivered
   #   messages are discarded after this period
   # @param daytime [Boolean] when true, defer night-time sends to the recipient's daytime
   # @param translit [Boolean] transliterate Cyrillic to Latin

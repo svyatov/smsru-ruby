@@ -5,7 +5,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+The public API that Semantic Versioning covers is every constant and method
+under `SmsRu` that YARD documents as public: the `SmsRu` client and its `auth`,
+`callbacks`, `call_check`, `my`, and `stoplist` sub-resources, the result and
+event `Data` classes, the `SmsRu::Statuses` constants and predicates, the error
+hierarchy under `SmsRu::Error`, and `SmsRu::Webhook.parse`. Anything marked
+`@api private`, including `SmsRu::Coerce` and the sub-resource constructors, may
+change in any release. The minimum supported Ruby version is part of the public
+API: raising it takes a MAJOR release.
+
 ## [Unreleased]
+
+### Added
+
+- This changelog now declares which constants and methods Semantic Versioning
+  covers, so a version range says something checkable about what may change.
 
 ## [2.0.1] - 2026-07-31
 
@@ -26,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **BREAKING:** Renamed the gem from `smsru_ruby` to `smsru-ruby` for
+- **Breaking:** Renamed the gem from `smsru_ruby` to `smsru-ruby` for
   consistency with the `-ruby` suffix convention. Update your `Gemfile`
   (`gem "smsru-ruby"`) and requires (`require "smsru-ruby"`). The Ruby API is
   unchanged. The top-level class is still `SmsRu`.
