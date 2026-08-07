@@ -12,7 +12,7 @@ gem "minitest", "~> 6.0"
 gem "vcr", "~> 6.4"
 gem "webmock", "~> 3.26"
 
-gem "rubocop", "~> 1.88"
+gem "rubocop", "~> 1.89"
 gem "rubocop-minitest", "~> 0.40"
 
 gem "rbs", "~> 4.0", require: false
