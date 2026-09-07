@@ -318,9 +318,8 @@ reported on each `SmsRu::Sms` in `result.messages` (see above).
 
 ## Development
 
-Ruby 3.2 or newer is required, because the result objects use
-[`Data`](https://docs.ruby-lang.org/en/3.2/Data.html). CI runs against
-`ruby-head`, `4.0`, `3.4`, `3.3`, and `3.2`.
+Ruby 3.3 or newer is required. CI runs against `ruby-head`, `4.0`, `3.4`, and
+`3.3`.
 
 ```sh
 bin/setup            # install dependencies
