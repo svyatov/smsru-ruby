@@ -16,10 +16,11 @@ API: raising it takes a MAJOR release.
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-09-07
+
 ### Removed
 
-- Ruby 3.2 support. The minimum supported Ruby is now 3.3, so the next release
-  is 3.0.0.
+- Ruby 3.2 support. The minimum supported Ruby is now 3.3.
 
 ### Added
 
@@ -81,7 +82,8 @@ same API, reworked to be idiomatic Ruby. How it differs from the original:
   SMS.ru's loosely-typed JSON is normalized to the declared types at the parse
   boundary, so result objects never surface raw wire values.
 
-[Unreleased]: https://github.com/svyatov/smsru-ruby/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/svyatov/smsru-ruby/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/svyatov/smsru-ruby/compare/v2.0.1...v3.0.0
 [2.0.1]: https://github.com/svyatov/smsru-ruby/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/svyatov/smsru-ruby/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/svyatov/smsru-ruby/releases/tag/v1.0.0
