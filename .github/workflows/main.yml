@@ -21,13 +21,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby_version: [ruby-head, "4.0", "3.4", "3.3", "3.2"]
+        ruby_version: [ruby-head, "4.0", "3.4", "3.3"]
 
     env:
       COVERAGE: true
-      # 3.2 (the gem's minimum) uses a gemfile that pins libs whose latest majors
-      # dropped 3.2; every other Ruby uses the root Gemfile with up-to-date libs.
-      BUNDLE_GEMFILE: ${{ matrix.ruby_version == '3.2' && 'gemfiles/ruby_3_2.gemfile' || 'Gemfile' }}
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

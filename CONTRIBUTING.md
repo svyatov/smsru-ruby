@@ -36,7 +36,7 @@ COVERAGE=true bundle exec rake   # expect 100% coverage
 
 ## Code style
 
-- Ruby 3.2+, two-space indentation, 120-character lines.
+- Ruby 3.3+, two-space indentation, 120-character lines.
 - RuboCop (with `rubocop-minitest`) must pass; run `bundle exec rubocop -A` to
   auto-correct.
 - Add no runtime dependencies. The gem uses the standard library only.

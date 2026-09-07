@@ -16,6 +16,11 @@ API: raising it takes a MAJOR release.
 
 ## [Unreleased]
 
+### Removed
+
+- Ruby 3.2 support. The minimum supported Ruby is now 3.3, so the next release
+  is 3.0.0.
+
 ### Added
 
 - This changelog now declares which constants and methods Semantic Versioning
