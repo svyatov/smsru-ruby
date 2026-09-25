@@ -20,4 +20,4 @@ gem "steep", "~> 2.1", require: false
 
 gem "yard", "~> 0.9", require: false
 
-gem "simplecov", "~> 1.2", require: false
+gem "simplecov", "~> 1.3", require: false
