@@ -10,9 +10,9 @@ gem "rake", "~> 13.4"
 
 gem "minitest", "~> 6.0"
 gem "vcr", "~> 6.4"
-gem "webmock", "~> 3.26"
+gem "webmock", "~> 3.34"
 
-gem "rubocop", "~> 1.91"
+gem "rubocop", "~> 1.92"
 gem "rubocop-minitest", "~> 0.41"
 
 gem "rbs", "~> 4.2", require: false
