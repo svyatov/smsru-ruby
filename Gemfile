@@ -8,7 +8,7 @@ gemspec
 gem "irb", require: false # for bin/console (a bundled gem since Ruby 3.4)
 gem "rake", "~> 13.4"
 
-gem "minitest", "~> 6.0"
+gem "minitest", "~> 6.1"
 gem "vcr", "~> 6.4"
 gem "webmock", "~> 3.34"
 
